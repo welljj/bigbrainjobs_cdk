@@ -1,0 +1,12 @@
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+WorkingDirectory=/home/ubuntu/bigbrainjobs
+ExecStart=gunicorn --pythonpath /home/ubuntu/venv/lib/python3.10/site-packages --workers 4 bigbrainjobs.wsgi
+EnvironmentFile=/home/ubuntu/.env
+
+[Install]
+WantedBy=multi-user.target
