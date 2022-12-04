@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "description": "",
-  "source": "static/src/index.js",
+  "source": "static/src/main.js",
   "scripts": {
     "start": "parcel",
     "build": "parcel build --dist-dir static/dist",
