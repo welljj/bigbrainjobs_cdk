@@ -17,6 +17,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@parcel/transformer-sass": "latest",
     "parcel": "latest"
   },
   "dependencies": {
