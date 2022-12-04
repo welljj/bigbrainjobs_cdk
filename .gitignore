@@ -11,3 +11,7 @@ cdk.out
 
 # Django
 db.sqlite3
+
+# npm
+node_modules
+.parcel-cache

@@ -1,0 +1,1 @@
+{"mappings":"AAAA;AACA,QAAQ,GAAG,CAAC","sources":["static/src/index.js"],"sourcesContent":["\"use strict\";\nconsole.log(\"Hello, world!\");"],"names":[],"version":3,"file":"main.js.map"}
