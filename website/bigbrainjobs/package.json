@@ -18,7 +18,8 @@
   "license": "ISC",
   "devDependencies": {
     "@parcel/transformer-sass": "latest",
-    "parcel": "latest"
+    "parcel": "latest",
+    "sharp": "latest"
   },
   "dependencies": {
     "@popperjs/core": "latest",
