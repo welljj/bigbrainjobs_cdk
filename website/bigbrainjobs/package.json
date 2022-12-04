@@ -4,9 +4,14 @@
   "version": "1.0.0",
   "description": "",
   "source": "static/src/main.js",
+  "targets": {
+    "default": {
+      "distDir": "static/dist"
+    }
+  },
   "scripts": {
-    "start": "parcel",
-    "build": "parcel build --dist-dir static/dist",
+    "watch": "parcel watch",
+    "build": "parcel build --no-cache",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
