@@ -1,0 +1,21 @@
+{
+  "name": "parcel-namer-hashless",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "engines": {
+    "parcel": "2.x"
+  },
+  "scripts": {
+    "build": "babel src -d lib",
+    "prepare": "npm run build"
+  },
+  "devDependencies": {
+    "@babel/cli": "latest",
+    "@babel/core": "latest",
+    "@babel/preset-env": "latest"
+  },
+  "author": "",
+  "license": "ISC"
+}
