@@ -14,7 +14,10 @@
   "devDependencies": {
     "@babel/cli": "latest",
     "@babel/core": "latest",
-    "@babel/preset-env": "latest"
+    "@parcel/babel-preset": "latest"
+  },
+  "dependencies": {
+    "@parcel/plugin": "latest"
   },
   "author": "",
   "license": "ISC"
