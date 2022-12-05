@@ -9,7 +9,7 @@
     }
   },
   "scripts": {
-    "watch": "parcel watch",
+    "watch": "parcel watch './static/src/**/main.js'",
     "build": "rm -rf ./static/dist/ && parcel build './static/src/**/main.js' --no-cache",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
