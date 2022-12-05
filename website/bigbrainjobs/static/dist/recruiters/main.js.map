@@ -1,0 +1,1 @@
+{"mappings":"AAAAA,QAAQC,IAAI","sources":["static/src/recruiters/main.js"],"sourcesContent":["console.log(\"Hello World!\");"],"names":["console","log"],"version":3,"file":"main.js.map"}
