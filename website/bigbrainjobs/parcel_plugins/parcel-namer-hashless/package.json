@@ -14,7 +14,7 @@
   "devDependencies": {
     "@babel/cli": "latest",
     "@babel/core": "latest",
-    "@parcel/babel-preset": "latest"
+    "@babel/preset-env": "latest"
   },
   "dependencies": {
     "@parcel/plugin": "latest"

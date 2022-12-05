@@ -1,5 +1,5 @@
 {
     "presets": [
-        "@parcel/babel-preset"
+        "@babel/preset-env"
     ]
 }
