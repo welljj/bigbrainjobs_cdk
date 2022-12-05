@@ -22,7 +22,8 @@
   },
   "dependencies": {
     "@popperjs/core": "latest",
-    "bootstrap": "latest"
+    "bootstrap": "latest",
+    "bootstrap-icons": "latest"
   },
   "workspaces": [
     "parcel_plugins/parcel-namer-hashless"
