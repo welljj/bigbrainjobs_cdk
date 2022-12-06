@@ -18,14 +18,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@parcel/transformer-sass": "latest",
-    "parcel": "latest",
-    "sharp": "latest"
+    "@parcel/transformer-sass": "^2.8.0",
+    "parcel": "^2.8.0",
+    "sharp": "^0.31.2"
   },
   "dependencies": {
-    "@popperjs/core": "latest",
-    "bootstrap": "latest",
-    "bootstrap-icons": "latest"
+    "@popperjs/core": "^2.11.6",
+    "bootstrap": "^5.2.3",
+    "bootstrap-icons": "^1.10.2"
   },
   "workspaces": [
     "parcel_plugins/parcel-namer-hashless"
