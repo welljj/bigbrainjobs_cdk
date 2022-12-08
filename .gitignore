@@ -13,3 +13,4 @@ staticfiles
 # npm
 node_modules
 .parcel-cache
+lib
