@@ -80,7 +80,8 @@ DATABASES = {
     "default": {
         "ENGINE": "django.contrib.gis.db.backends.postgis",
         "NAME": "geodjango",
-        "USER": "geo",
+        "USER": "geodjango",
+        "PASSWORD": "geodjango",
     }
 }
 
