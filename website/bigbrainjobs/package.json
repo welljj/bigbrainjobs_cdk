@@ -18,8 +18,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.8.0",
-    "parcel": "^2.8.0",
+    "@parcel/transformer-sass": "^2.8.1",
+    "parcel": "^2.8.1",
     "sharp": "^0.31.2"
   },
   "dependencies": {
