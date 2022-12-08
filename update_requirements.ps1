@@ -1,0 +1,2 @@
+.\.venv\Scripts\pip.exe install -U --upgrade-strategy eager pip setuptools wheel
+.\.venv\Scripts\pip.exe install -U --upgrade-strategy eager -r .\requirements.txt -r .\requirements-dev.txt -r .\website\bigbrainjobs\requirements.txt
