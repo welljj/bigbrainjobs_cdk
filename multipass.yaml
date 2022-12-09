@@ -4,6 +4,7 @@ package_upgrade: true
 package_reboot_if_required: true
 ssh_authorized_keys:
   - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCoPmrhG9uTsH16UbaR18DFoQKWgSR/OGoiIRyUd/VJWjcGNNw87if8uUah7KnLfWvmHqBbrIr7fwPcxxaPPzzdtaf+zIk5oq4d3tq/8Lddjs1WuWkAj4jxIsYr3J61cM1YIRFlzKHcx8sdJrA31V0isFVPEeZEd40hpJ6zyXIGu+sHyLlaSLXnv6Y+6pMtGvrIM727OmI0zjvo31HUa4E/JxllkQSI8uMnJoGTutCHsm1rOJUuXxRiCrsEPb5f0GOKcDgHk8JxRuSoiV50NvCWgWvS6EOuXlGWlGFtMfcxWt/YLoTz7NEnHn6uMXrZSK+7BdVoT9p8DOhjPOyzZu0pH3AM4toGUW5ku8N01PKi0xnbpoPcPWrW/O3CL2e+p+5uUuoihKSrykmBMikPGHmeXu33/McasAsocgdCNbQVpJDR5u0qqRiaJJuBmsuX3Bst/TiudWPGLwC2MUBk0/l+qHtpMAU5yhV38sIZwzG/yTSUJ+7bZUmIR95E/TmCGj0= johno@JohnathnsLaptop
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCq/DQ1zTaH5bAjsScwFztmtfn+OJ3WszpAqoom1sGQf229SVVtRuNfv3aRSEeMGknvmixR0F709EzvH4gE5FWNCJyqQWpQ5KZ4qXFFltGoiUsDC4RwVEt88j+17yjbovJesnT4N36it/q6hMI4Wew73y2sSS3Z8St03SvkM+vVufqAMRsYtGHlHO5JpvzIViFFg4aoeTb99zaGRkRDRGdsNo0FKMlSlI6tzzzgmCNiypSc66qbzaGjEOEsUPoESgHonaERelTMRJ2Vcc0qZnBh8wtKACJjRR4Ypm+5tAAIvhD5Jx6lvtMAN2ljFR4JFyJCxif8IkRNu7ThkMA7pp1pUUM6T5V8YVWYNOP0Van+H03ux+nAGqUxWv9dslYEUkh7Gxwz692HhmDx/rj52NPx5UNgnkNIBkmkuuebvT5zLkRwfL7kzkkr0iOZbcEiOYJVJSJS4yWT7HQWQLq8v6wwNeUieCgBfEoRWqhHQ32vCGRrWBMPd8Nk24h6mCkuLJE= johno@DESKTOP-O9103RL
 packages:
   - python3-venv
   - python3-dev
@@ -13,6 +14,7 @@ packages:
   - postgis
   - postgresql-postgis
   - direnv
+  - unzip
 snap:
   commands:
     - snap refresh
@@ -23,11 +25,37 @@ write_files:
     owner: ubuntu:ubuntu
     append: true
     defer: true
+  - path: /home/ubuntu/update_aws_cli.sh
+    content: |
+      #!/bin/bash
+      curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+      unzip ./awscliv2.zip
+      if command -v aws
+      then
+        echo "updating"
+        sudo ./aws/install --update
+      else
+        echo "installing"
+        sudo ./aws/install
+      fi
+      rm -rf ./aws
+      rm -rf ./awscliv2.zip
+    owner: ubuntu:ubuntu
+    append: true
+    defer: true
+    permissions: 0755
 runcmd:
   - sudo -u ubuntu git config --global user.name "Johnathan Caldwell"
   - sudo -u ubuntu git config --global user.email jjcldwll@gmail.com
-  - sudo -u ubuntu curl -o /home/ubuntu/nvm-install.sh https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh
-  - sudo -u ubuntu bash /home/ubuntu/nvm-install.sh
-  - sudo -u postgres psql -c 'CREATE USER geodjango PASSWORD 'geodjango';'
-  - sudo -u postgres psql -c 'CREATE DATABASE geodjango OWNER geodjango;'
-  - sudo -u postgres psql -d geodjango -c 'CREATE EXTENSION postgis;'
+  - bash /home/ubuntu/update_aws_cli.sh
+  # - sudo -u ubuntu curl -o /home/ubuntu/nvm-install.sh https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh
+  # - sudo -u ubuntu bash /home/ubuntu/nvm-install.sh
+  - curl -sL https://deb.nodesource.com/setup_lts.x | bash -
+  - apt install -y nodejs
+  - npm install -g npm@latest
+  - npm update -g
+  - npm install -g npm-check-updates
+  - npm install -g aws-cdk
+  - sudo -u postgres psql -c "CREATE USER geodjango PASSWORD 'geodjango';"
+  - sudo -u postgres psql -c "CREATE DATABASE geodjango OWNER geodjango;"
+  - sudo -u postgres psql -d geodjango -c "CREATE EXTENSION postgis;"
