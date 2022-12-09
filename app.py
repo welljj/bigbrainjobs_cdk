@@ -10,7 +10,7 @@ app = cdk.App()
 BigbrainjobsCdkStack(
     app,
     "BigbrainjobsCdkStack",
-    cdk.Environment(
+    env=cdk.Environment(
         account=os.getenv("CDK_DEFAULT_ACCOUNT"), region=os.getenv("CDK_DEFAULT_REGION")
     ),
 )
