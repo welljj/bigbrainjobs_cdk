@@ -40,7 +40,6 @@ write_files:
       rm -rf ./aws
       rm -rf ./awscliv2.zip
     owner: ubuntu:ubuntu
-    append: true
     defer: true
     permissions: 0755
 runcmd:
