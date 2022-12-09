@@ -82,6 +82,8 @@ DATABASES = {
         "NAME": "geodjango",
         "USER": "geodjango",
         "PASSWORD": "geodjango",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 
