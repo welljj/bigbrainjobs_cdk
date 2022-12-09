@@ -1,0 +1,33 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+package_reboot_if_required: true
+ssh_authorized_keys:
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCoPmrhG9uTsH16UbaR18DFoQKWgSR/OGoiIRyUd/VJWjcGNNw87if8uUah7KnLfWvmHqBbrIr7fwPcxxaPPzzdtaf+zIk5oq4d3tq/8Lddjs1WuWkAj4jxIsYr3J61cM1YIRFlzKHcx8sdJrA31V0isFVPEeZEd40hpJ6zyXIGu+sHyLlaSLXnv6Y+6pMtGvrIM727OmI0zjvo31HUa4E/JxllkQSI8uMnJoGTutCHsm1rOJUuXxRiCrsEPb5f0GOKcDgHk8JxRuSoiV50NvCWgWvS6EOuXlGWlGFtMfcxWt/YLoTz7NEnHn6uMXrZSK+7BdVoT9p8DOhjPOyzZu0pH3AM4toGUW5ku8N01PKi0xnbpoPcPWrW/O3CL2e+p+5uUuoihKSrykmBMikPGHmeXu33/McasAsocgdCNbQVpJDR5u0qqRiaJJuBmsuX3Bst/TiudWPGLwC2MUBk0/l+qHtpMAU5yhV38sIZwzG/yTSUJ+7bZUmIR95E/TmCGj0= johno@JohnathnsLaptop
+packages:
+  - python3-venv
+  - python3-dev
+  - build-essential
+  - libpq-dev
+  - postgresql
+  - postgis
+  - postgresql-postgis
+  - direnv
+snap:
+  commands:
+    - snap refresh
+write_files:
+  - path: /home/ubuntu/.bashrc
+    content: |
+      eval "$(direnv hook bash)"
+    owner: ubuntu:ubuntu
+    append: true
+    defer: true
+runcmd:
+  - sudo -u ubuntu git config --global user.name "Johnathan Caldwell"
+  - sudo -u ubuntu git config --global user.email jjcldwll@gmail.com
+  - sudo -u ubuntu curl -o /home/ubuntu/nvm-install.sh https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh
+  - sudo -u ubuntu bash /home/ubuntu/nvm-install.sh
+  - sudo -u postgres psql -c 'CREATE USER geodjango PASSWORD 'geodjango';'
+  - sudo -u postgres psql -c 'CREATE DATABASE geodjango OWNER geodjango;'
+  - sudo -u postgres psql -d geodjango -c 'CREATE EXTENSION postgis;'
