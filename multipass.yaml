@@ -9,10 +9,9 @@ packages:
   - python3-venv
   - python3-dev
   - build-essential
-  - libpq-dev
-  - postgresql
-  - postgis
+  - postgresql-server-dev-all
   - postgresql-postgis
+  - postgis
   - direnv
   - unzip
 snap:
