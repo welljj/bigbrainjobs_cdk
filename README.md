@@ -29,6 +29,8 @@ Within the project:
 
 `update_requirements.sh` is a helper script to install/update all Python dependencies in the `.venv`. NOTE: Dependencies should be versioned at release.
 
+`python manage.py runserver 0:8000` is necessary to access the development server on Multipass from the host computer.
+
 ## Production server
 CDK is designed to deploy to AWS. While there are many ways to deploy this application on AWS, this project uses a "simple and cheap" option since this is just a sample project:
 * A single EC2 instance with:
