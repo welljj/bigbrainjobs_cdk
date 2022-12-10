@@ -7,16 +7,25 @@ It's built with AWS CDK and includes both the infrastructure to start the websit
 ## Local development environment
 The primary development environment uses [Multipass](https://multipass.run). This makes it easier to develop across platforms, and allows the development environment to match the production. It's particularly useful since this project is using PostGIS which has extra dependencies that can be tricky to install, or clutter the local machine.
 
-The `multipass` folder contains a Python script that'll generate a cloud-init YAML file to use when creating a new Multipass virtual machine -- this file is generated so that it can load the SSH public key from the local machine, so that VSCode (or SSH) can be used for development.
+The `multipass` folder contains a Python script that'll generate a cloud-init YAML file to use when creating a new Multipass virtual machine -- this file is generated so that it can load the SSH public key from the local machine, this way VSCode (or SSH) can be used for development.
 
-Another tool used is `direnv` with the associated `.envrc` file in the project. `.envrc` contains environment variables for use during development, but should not be used on the production server.
+To launch the multipass instance, I use: ```multipass launch lts -n bigbrains -c 2 -m 2G -d 8G --cloud-init multipass.yaml```
 
-`nodejs` and `npm` are used within the Django project to compile static files.
+The cloud-init file is designed to be used with Ubuntu LTS (22.04) and provides the following:
+
+`direnv`, used with the associated `.envrc` file in the project. `.envrc` contains environment variables for use during development, but should not be used on the production server. NOTE: `direnv allow` will need to be used when `cd`-ing into the project directory.
+
+AWS CLI is installed and can be invoked with the `aws` command. There is also an `update_aws_cli.sh` script in the home folder that can be used to update the tool. `aws` is only necessary if the CDK infrastructure is being built/tested/deployed from the environment, and can be setup with the ```aws configure``` command.
+
+`nodejs` and `npm` are installed, to be used within the Django project to compile static files:
 * `parcel_plugins` contains a single Namer plugin for Parceljs. This plugin simply prevents Parceljs from adding a hash to built files. The plugins main code is built with babel automatically on `npm install` from the top-level of the Django project, so there is no need to travel into this folder to install or build anything. 
 * `package.json` is inside the Django project folder, so `npm install` needs to be run from there.
 * `npm run build`: builds all static files
 * `npm run watch`: watches static files
 * `npm run clean`: deletes the static files build directory (useful before building)
+* `ncu` can be used to check for updates to dependencies.
+
+Within the project:
 
 `update_requirements.sh` is a helper script to install/update all Python dependencies in the `.venv`. NOTE: Dependencies should be versioned at release.
 
