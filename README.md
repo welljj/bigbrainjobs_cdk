@@ -13,6 +13,10 @@ To launch the multipass instance, I use: ```multipass launch lts -n bigbrains -c
 
 The cloud-init file is designed to be used with Ubuntu LTS (22.04) and provides the following:
 
+`python3-venv`: used to create a `.venv` inside the project root.
+
+`postgresql` + `postgis` and related libraries and development files. Required by `GeoDjango` and `psycopg`. It also sets up the geodjango user, password, and database. No other config required.
+
 `direnv`, used with the associated `.envrc` file in the project. `.envrc` contains environment variables for use during development, but should not be used on the production server. NOTE: `direnv allow` will need to be used when `cd`-ing into the project directory.
 
 AWS CLI is installed and can be invoked with the `aws` command. There is also an `update_aws_cli.sh` script in the home folder that can be used to update the tool. `aws` is only necessary if the CDK infrastructure is being built/tested/deployed from the environment, and can be setup with the ```aws configure``` command.
