@@ -1,5 +1,6 @@
-import yaml
 import pathlib
+
+import yaml
 
 current_dir = pathlib.Path(__file__).parent
 
@@ -56,8 +57,6 @@ yaml_data = {
         'sudo -u postgres psql -d geodjango -c "CREATE EXTENSION postgis;"',
     ],
 }
-
-print(yaml_data)
 
 with open("multipass.yaml", "w") as f:
     yaml.dump(yaml_data, f, sort_keys=False)
