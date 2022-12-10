@@ -1,9 +1,10 @@
 import pathlib
-import subprocess
+from git import Repo
 
 import yaml
 
 current_dir = pathlib.Path(__file__).parent
+repo = Repo(current_dir.parent)
 
 with open(current_dir / "update_aws_cli.sh", "rb") as f:
     update_aws_cli = f.read()
@@ -11,15 +12,8 @@ with open(current_dir / "update_aws_cli.sh", "rb") as f:
 with open(pathlib.Path.home() / ".ssh" / "id_rsa.pub") as f:
     ssh_public_key = f.read().strip()
 
-git_name = subprocess.run(
-    ["git", "config", "user.name"],
-    capture_output=True,
-).stdout
-
-git_email = subprocess.run(
-    ["git", "config", "user.email"],
-    capture_output=True,
-).stdout
+git_name = repo.config_reader().get_value("user", "name")
+git_email = repo.config_reader().get_value("user", "email")
 
 yaml_data = {
     "package_update": True,
