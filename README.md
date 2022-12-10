@@ -17,7 +17,7 @@ The cloud-init file is designed to be used with Ubuntu LTS (22.04) and provides 
 
 AWS CLI is installed and can be invoked with the `aws` command. There is also an `update_aws_cli.sh` script in the home folder that can be used to update the tool. `aws` is only necessary if the CDK infrastructure is being built/tested/deployed from the environment, and can be setup with the ```aws configure``` command.
 
-`nodejs` and `npm` are installed, to be used within the Django project to compile static files:
+`nodejs` and `npm` are installed, to be used within the Django project to compile static files with `Parcel`:
 * `parcel_plugins` contains a single Namer plugin for Parceljs. This plugin simply prevents Parceljs from adding a hash to built files. The plugins main code is built with babel automatically on `npm install` from the top-level of the Django project, so there is no need to travel into this folder to install or build anything. 
 * `package.json` is inside the Django project folder, so `npm install` needs to be run from there.
 * `npm run build`: builds all static files
