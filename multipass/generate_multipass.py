@@ -58,5 +58,5 @@ yaml_data = {
     ],
 }
 
-with open("multipass.yaml", "w") as f:
+with open(current_dir / "multipass.yaml", "w") as f:
     yaml.dump(yaml_data, f, sort_keys=False)
