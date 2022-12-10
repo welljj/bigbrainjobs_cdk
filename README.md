@@ -13,12 +13,16 @@ Another tool used is `direnv` with the associated `.envrc` file in the project. 
 
 `nodejs` and `npm` are used within the Django project to compile static files.
 
+`update_requirements.sh` is a helper script to install/update all Python dependencies in the `.venv`. NOTE: Dependencies should be versioned at release.
+
 ## Production server
 CDK is designed to deploy to AWS. While there are many ways to deploy this application on AWS, this project uses a "simple and cheap" option since this is just a sample project:
 * A single EC2 instance with:
    * The Django website in the `website` folder
    * `nginx` and `gunicorn` to serve the website
    * `postgresql` with `postgis` for the database
+   * `systemd` socket and service to run the gunicorn server
+      * A .env file needs to be created in the home directory with appropriate production env vars
 
 Some of the alternatives (not used in the this project), which are more expensive but better for a real production environment:
 * A Load Balancer with EC2 instances in the public subnet holding the Django application, and EC2 instances in a private subnet holding the postgresql + postgis databases.
