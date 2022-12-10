@@ -1,4 +1,5 @@
 import pathlib
+import subprocess
 
 import yaml
 
@@ -9,6 +10,16 @@ with open(current_dir / "update_aws_cli.sh", "rb") as f:
 
 with open(pathlib.Path.home() / ".ssh" / "id_rsa.pub") as f:
     ssh_public_key = f.read().strip()
+
+git_name = subprocess.run(
+    ["git", "config", "user.name"],
+    capture_output=True,
+).stdout
+
+git_email = subprocess.run(
+    ["git", "config", "user.email"],
+    capture_output=True,
+).stdout
 
 yaml_data = {
     "package_update": True,
@@ -43,8 +54,8 @@ yaml_data = {
         },
     ],
     "runcmd": [
-        'sudo -u ubuntu git config --global user.name "Johnathan Caldwell"',
-        "sudo -u ubuntu git config --global user.email jjcldwll@gmail.com",
+        f'sudo -u ubuntu git config --global user.name "{git_name}"',
+        f"sudo -u ubuntu git config --global user.email {git_email}",
         "bash /home/ubuntu/update_aws_cli.sh",
         "curl -sL https://deb.nodesource.com/setup_lts.x | bash -",
         "apt install -y nodejs",
