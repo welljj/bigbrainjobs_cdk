@@ -11,6 +11,8 @@ The `multipass` folder contains a Python script that'll generate a cloud-init YA
 
 Another tool used is `direnv` with the associated `.envrc` file in the project. `.envrc` contains environment variables for use during development, but should not be used on the production server.
 
+`nodejs` and `npm` are used within the Django project to compile static files.
+
 ## Production server
 CDK is designed to deploy to AWS. While there are many ways to deploy this application on AWS, this project uses a "simple and cheap" option since this is just a sample project:
 * A single EC2 instance with:
