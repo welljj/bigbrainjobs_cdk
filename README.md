@@ -12,6 +12,11 @@ The `multipass` folder contains a Python script that'll generate a cloud-init YA
 Another tool used is `direnv` with the associated `.envrc` file in the project. `.envrc` contains environment variables for use during development, but should not be used on the production server.
 
 `nodejs` and `npm` are used within the Django project to compile static files.
+* `parcel_plugins` contains a single Namer plugin for Parceljs. This plugin simply prevents Parceljs from adding a hash to built files. The plugins main code is built with babel automatically on `npm install` from the top-level of the Django project, so there is no need to travel into this folder to install or build anything. 
+* `package.json` is inside the Django project folder, so `npm install` needs to be run from there.
+* `npm run build`: builds all static files
+* `npm run watch`: watches static files
+* `npm run clean`: deletes the static files build directory (useful before building)
 
 `update_requirements.sh` is a helper script to install/update all Python dependencies in the `.venv`. NOTE: Dependencies should be versioned at release.
 
