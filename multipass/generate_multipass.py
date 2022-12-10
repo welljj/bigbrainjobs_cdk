@@ -63,9 +63,8 @@ yaml_data = {
         "npm update -g",
         "npm install -g npm-check-updates",
         "npm install -g aws-cdk",
-        "sudo -u postgres psql -c \"CREATE USER geodjango PASSWORD 'geodjango';\"",
+        "sudo -u postgres psql -c \"CREATE USER geodjango WITH SUPERUSER PASSWORD 'geodjango';\"",
         'sudo -u postgres psql -c "CREATE DATABASE geodjango OWNER geodjango;"',
-        'sudo -u postgres psql -d geodjango -c "CREATE EXTENSION postgis;"',
     ],
 }
 
