@@ -1,4 +1,3 @@
 pytest
 black
 djlint
-GitPython

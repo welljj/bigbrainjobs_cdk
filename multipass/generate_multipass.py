@@ -1,10 +1,13 @@
+import configparser
 import pathlib
-from git import Repo
 
 import yaml
 
 current_dir = pathlib.Path(__file__).parent
-repo = Repo(current_dir.parent)
+home_path = pathlib.Path.home()
+git_config_path = home_path / ".gitconfig"
+aws_config_path = home_path / ".aws" / "config"
+aws_credentials_path = home_path / ".aws" / "credentials"
 
 with open(current_dir / "update_aws_cli.sh", "r") as f:
     update_aws_cli = f.read()
@@ -12,8 +15,17 @@ with open(current_dir / "update_aws_cli.sh", "r") as f:
 with open(pathlib.Path.home() / ".ssh" / "id_rsa.pub") as f:
     ssh_public_key = f.read().strip()
 
-git_name = repo.config_reader().get_value("user", "name")
-git_email = repo.config_reader().get_value("user", "email")
+
+config = configparser.ConfigParser()
+config.read([git_config_path, aws_config_path, aws_credentials_path])
+
+git_name = config["user"]["name"]
+git_email = config["user"]["email"]
+
+aws_region = config["default"]["region"]
+aws_output = config["default"]["output"]
+aws_access_key_id = config["default"]["aws_access_key_id"]
+aws_secret_access_key = config["default"]["aws_secret_access_key"]
 
 yaml_data = {
     "package_update": True,
@@ -51,6 +63,10 @@ yaml_data = {
         f'sudo -u ubuntu git config --global user.name "{git_name}"',
         f"sudo -u ubuntu git config --global user.email {git_email}",
         "bash /home/ubuntu/update_aws_cli.sh",
+        f'sudo -u ubuntu aws configure set aws_access_key_id "{aws_access_key_id}"',
+        f'sudo -u ubuntu aws configure set aws_secret_access_key "{aws_secret_access_key}"',
+        f'sudo -u ubuntu aws configure set region "{aws_region}"',
+        f'sudo -u ubuntu aws configure set output "{aws_output}"',
         "curl -sL https://deb.nodesource.com/setup_lts.x | bash -",
         "apt install -y nodejs",
         "npm install -g npm@latest",
