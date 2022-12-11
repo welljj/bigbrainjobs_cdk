@@ -1,5 +1,6 @@
 from django.contrib.gis.db import models
 from django.conf import settings
+from .utils import get_location_point
 
 
 class Company(models.Model):
@@ -64,3 +65,8 @@ class Company(models.Model):
     zip_code = models.CharField(max_length=10)
     location = models.PointField()
     about = models.TextField()
+
+    def save(self, *args, **kwargs):
+        full_address = f"{self.address}, {self.city}, {self.state} {self.zip_code}"
+        self.location = get_location_point(full_address)
+        super().save(*args, **kwargs)
