@@ -133,3 +133,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Custom User Model: https://docs.djangoproject.com/en/dev/topics/auth/customizing/#substituting-a-custom-user-model
 AUTH_USER_MODEL = "accounts.CustomUser"
+
+# Google Maps API Key
+GOOGLE_MAPS_API_KEY = os.environ["GOOGLE_MAPS_API_KEY"]
