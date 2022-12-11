@@ -2,6 +2,7 @@ package-lock.json
 .pytest_cache
 .venv
 multipass.yaml
+.envrc
 
 # CDK asset staging directory
 .cdk.staging
