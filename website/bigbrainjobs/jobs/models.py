@@ -70,3 +70,13 @@ class Company(models.Model):
         full_address = f"{self.address}, {self.city}, {self.state} {self.zip_code}"
         self.location = get_location_point(full_address)
         super().save(*args, **kwargs)
+
+
+class Job(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    full_time = models.BooleanField()
+    hourly = models.PositiveSmallIntegerField()
+    salary = models.PositiveIntegerField()
+    applicants = models.ManyToManyField(settings.AUTH_USER_MODEL)
