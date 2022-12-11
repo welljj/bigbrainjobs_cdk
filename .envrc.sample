@@ -1,5 +1,8 @@
 export PYTHONDONTWRITEBYTECODE=1
+export PYTHONPATH=$PWD/website/bigbrainjobs
 # Django settings
+export DJANGO_SETTINGS_MODULE=bigbrainjobs.settings
 export SECRET_KEY=django-insecure
 export ALLOWED_HOSTS=*
 export DEBUG=1
+export GOOGLE_MAPS_API_KEY=
