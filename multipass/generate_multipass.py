@@ -6,7 +6,7 @@ import yaml
 current_dir = pathlib.Path(__file__).parent
 repo = Repo(current_dir.parent)
 
-with open(current_dir / "update_aws_cli.sh", "rb") as f:
+with open(current_dir / "update_aws_cli.sh", "r") as f:
     update_aws_cli = f.read()
 
 with open(pathlib.Path.home() / ".ssh" / "id_rsa.pub") as f:
