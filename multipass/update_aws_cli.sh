@@ -2,7 +2,7 @@
 CURRENT_ARCH=$(uname -m)
 curl "https://awscli.amazonaws.com/awscli-exe-linux-${CURRENT_ARCH}.zip" -o "awscliv2.zip"
 unzip ./awscliv2.zip
-if command -v aws
+if command -v aws &> /dev/null
 then
 echo "updating"
 sudo ./aws/install --update
