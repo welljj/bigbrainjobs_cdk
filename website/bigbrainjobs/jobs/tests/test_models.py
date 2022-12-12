@@ -1,11 +1,16 @@
+from unittest.mock import patch
+
 from django.contrib.auth import get_user_model
+from django.contrib.gis.geos import Point
 from django.test import TestCase
 from jobs.models import Company
 
 
 class CompanyTestCase(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    @patch("jobs.models.get_location_point")
+    def setUpTestData(cls, mock_get_location_point):
+        mock_get_location_point.return_value = Point(0, 0)
         cls.user_a = get_user_model().objects.create_user(
             username="user_a", email="user_a@test.com", password="password"
         )
@@ -35,4 +40,6 @@ class CompanyTestCase(TestCase):
         company_a = Company.objects.get(name="Company A")
         company_b = Company.objects.get(name="Company B")
         self.assertTrue(company_a.location)
-        self.assertFalse(company_b.location)
+        self.assertTrue(company_b.location)
+        self.assertTrue(company_a.location.equals(Point(0, 0)))
+        self.assertTrue(company_b.location.equals(Point(0, 0)))
