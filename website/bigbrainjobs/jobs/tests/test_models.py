@@ -8,9 +8,8 @@ from jobs.models import Company
 
 class CompanyTestCase(TestCase):
     @classmethod
-    @patch("jobs.models.get_location_point")
-    def setUpTestData(cls, mock_get_location_point):
-        mock_get_location_point.return_value = Point(0, 0)
+    @patch("jobs.models.get_location_point", lambda x: Point(0, 0))
+    def setUpTestData(cls):
         cls.user_a = get_user_model().objects.create_user(
             username="user_a", email="user_a@test.com", password="password"
         )
