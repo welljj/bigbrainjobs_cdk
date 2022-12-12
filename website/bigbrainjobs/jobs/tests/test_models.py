@@ -55,7 +55,7 @@ class CompanyTestCase(TestCase):
         self.assertTrue(company_a.location.equals(Point(0, 0)))
         self.assertTrue(company_b.location.equals(Point(0, 0)))
 
-    def test_company_change_manager_to_manager(self):
+    def test_company_change_manager_to_taken_manager(self):
         company_a = Company.objects.get(name="Company A")
         company_a.manager = self.user_b
         self.assertRaises(IntegrityError, company_a.save)
@@ -68,11 +68,6 @@ class CompanyTestCase(TestCase):
         self.user_c.save()
         self.user_a.save()
         company_a = Company.objects.get(name="Company A")
-        # company_b = Company.objects.get(name="Company B")
-        # company_b.manager = self.user_a
-        # company_b.save()
-        # self.user_a.save()
-        # self.user_b.save()
         self.assertEqual(company_a.manager, self.user_c)
         self.assertEqual(company_a, self.user_c.company)
         self.assertNotEqual(company_a, self.user_a.company)
