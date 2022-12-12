@@ -11,6 +11,7 @@ cdk.out
 # Django
 db.sqlite3
 staticfiles
+migrations
 
 # npm
 node_modules
