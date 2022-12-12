@@ -10,7 +10,7 @@ class CompanyTestCase(TestCase):
         "googlemaps.Client.geocode",
         lambda x, y: [{"geometry": {"location": {"lat": 0, "lng": 0}}}],
     )
-    def test_get_location_point(self):
+    def test_get_location_point_is_point(self):
         self.assertIsInstance(
             get_location_point("1600 Amphitheatre Parkway, Mountain View, CA"), Point
         )
