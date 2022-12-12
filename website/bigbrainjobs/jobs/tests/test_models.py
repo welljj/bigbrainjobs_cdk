@@ -10,14 +10,13 @@ from jobs.models import Company
 
 @patch("jobs.models.get_location_point", lambda x: Point(0, 0))
 class CompanyTestCase(TestCase):
-    @classmethod
     @patch("jobs.models.get_location_point", lambda x: Point(0, 0))
-    def setUpTestData(cls):
-        cls.user_a = get_user_model().objects.create_user(
+    def setUp(self):
+        self.user_a = get_user_model().objects.create_user(
             username="user_a", email="user_a@test.com", password="password"
         )
         Company.objects.create(
-            manager=cls.user_a,
+            manager=self.user_a,
             name="Company A",
             address="217 E 70th St",
             city="New York",
@@ -25,11 +24,11 @@ class CompanyTestCase(TestCase):
             zip_code="10021",
             about="TEST ABOUT",
         )
-        cls.user_b = get_user_model().objects.create_user(
+        self.user_b = get_user_model().objects.create_user(
             username="user_b", email="user_b@test.com", password="password"
         )
         Company.objects.create(
-            manager=cls.user_b,
+            manager=self.user_b,
             name="Company B",
             address="7101 S Central Ave",
             city="Los Angeles",
@@ -37,15 +36,9 @@ class CompanyTestCase(TestCase):
             zip_code="90001",
             about="TEST ABOUT 2",
         )
-        cls.user_c = get_user_model().objects.create_user(
+        self.user_c = get_user_model().objects.create_user(
             username="user_c", email="user_c@test.com", password="password"
         )
-
-    def test_company_primary_key(self):
-        company_a = Company.objects.get(name="Company A")
-        company_b = Company.objects.get(name="Company B")
-        self.assertEqual(company_a.pk, 1)
-        self.assertEqual(company_b.pk, 2)
 
     def test_company_has_location(self):
         company_a = Company.objects.get(name="Company A")
