@@ -2,10 +2,13 @@ from unittest.mock import patch
 
 from django.contrib.auth import get_user_model
 from django.contrib.gis.geos import Point
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.utils import IntegrityError
 from django.test import TestCase
 from jobs.models import Company
 
 
+@patch("jobs.models.get_location_point", lambda x: Point(0, 0))
 class CompanyTestCase(TestCase):
     @classmethod
     @patch("jobs.models.get_location_point", lambda x: Point(0, 0))
@@ -34,6 +37,9 @@ class CompanyTestCase(TestCase):
             zip_code="90001",
             about="TEST ABOUT 2",
         )
+        cls.user_c = get_user_model().objects.create_user(
+            username="user_c", email="user_c@test.com", password="password"
+        )
 
     def test_company_primary_key(self):
         company_a = Company.objects.get(name="Company A")
@@ -48,3 +54,26 @@ class CompanyTestCase(TestCase):
         self.assertTrue(company_b.location)
         self.assertTrue(company_a.location.equals(Point(0, 0)))
         self.assertTrue(company_b.location.equals(Point(0, 0)))
+
+    def test_company_change_manager_to_manager(self):
+        company_a = Company.objects.get(name="Company A")
+        company_a.manager = self.user_b
+        self.assertRaises(IntegrityError, company_a.save)
+
+    def test_company_change_manager(self):
+        self.assertRaises(ObjectDoesNotExist, lambda: self.user_c.company)
+        company_a = Company.objects.get(name="Company A")
+        company_a.manager = self.user_c
+        company_a.save()
+        self.user_c.save()
+        self.user_a.save()
+        company_a = Company.objects.get(name="Company A")
+        # company_b = Company.objects.get(name="Company B")
+        # company_b.manager = self.user_a
+        # company_b.save()
+        # self.user_a.save()
+        # self.user_b.save()
+        self.assertEqual(company_a.manager, self.user_c)
+        self.assertEqual(company_a, self.user_c.company)
+        self.assertNotEqual(company_a, self.user_a.company)
+        self.assertRaises(ObjectDoesNotExist, lambda: self.user_a.company)
