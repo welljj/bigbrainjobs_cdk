@@ -41,6 +41,7 @@ class CompanyTestCase(TestCase):
         )
 
     def test_company_has_location(self):
+        """Company location is created."""
         company_a = Company.objects.get(name="Company A")
         company_b = Company.objects.get(name="Company B")
         self.assertTrue(company_a.location)
@@ -49,19 +50,22 @@ class CompanyTestCase(TestCase):
         self.assertTrue(company_b.location.equals(Point(0, 0)))
 
     def test_company_change_manager_to_taken_manager(self):
+        """Each Company should have a unique manager."""
         company_a = Company.objects.get(name="Company A")
         company_a.manager = self.user_b
         self.assertRaises(IntegrityError, company_a.save)
 
     def test_company_change_manager(self):
-        self.assertRaises(ObjectDoesNotExist, lambda: self.user_c.company)
+        """Changing manager on Company should be reflected in users."""
         company_a = Company.objects.get(name="Company A")
+        self.assertEqual(company_a.manager, self.user_a)
+        self.assertEqual(company_a, self.user_a.company)
+        self.assertRaises(ObjectDoesNotExist, lambda: self.user_c.company)
         company_a.manager = self.user_c
         company_a.save()
-        self.user_c.save()
-        self.user_a.save()
-        company_a = Company.objects.get(name="Company A")
+        company_a.refresh_from_db()
+        self.user_c.refresh_from_db()
+        self.user_a.refresh_from_db()
         self.assertEqual(company_a.manager, self.user_c)
         self.assertEqual(company_a, self.user_c.company)
-        self.assertNotEqual(company_a, self.user_a.company)
         self.assertRaises(ObjectDoesNotExist, lambda: self.user_a.company)
