@@ -35,6 +35,12 @@ class CompanyTestCase(TestCase):
             about="TEST ABOUT 2",
         )
 
+    def test_company_primary_key(self):
+        company_a = Company.objects.get(name="Company A")
+        company_b = Company.objects.get(name="Company B")
+        self.assertEqual(company_a.pk, 1)
+        self.assertEqual(company_b.pk, 2)
+
     def test_company_has_location(self):
         company_a = Company.objects.get(name="Company A")
         company_b = Company.objects.get(name="Company B")
