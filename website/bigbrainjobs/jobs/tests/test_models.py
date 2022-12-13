@@ -3,6 +3,7 @@ from unittest.mock import patch
 from django.contrib.auth import get_user_model
 from django.contrib.gis.geos import Point
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import ProtectedError
 from django.db.utils import IntegrityError
 from django.test import TestCase
 from jobs.models import Company
@@ -69,3 +70,28 @@ class CompanyTestCase(TestCase):
         self.assertEqual(company_a.manager, self.user_c)
         self.assertEqual(company_a, self.user_c.manager_of)
         self.assertRaises(ObjectDoesNotExist, lambda: self.user_a.manager_of)
+
+    def test_delete_company(self):
+        """Deleting a company removes Users manager_of"""
+        company_a = Company.objects.get(name="Company A")
+        self.assertEqual(company_a, self.user_a.manager_of)
+        company_a.delete()
+        self.assertRaises(
+            ObjectDoesNotExist, lambda: Company.objects.get(name="Company A")
+        )
+        self.user_a.refresh_from_db()
+        self.assertRaises(ObjectDoesNotExist, lambda: self.user_a.manager_of)
+
+    def test_delete_company_manager_user(self):
+        """Deleting a User that is a manager raises a ProtectedError"""
+        company_a = Company.objects.get(name="Company A")
+        self.assertRaises(ProtectedError, self.user_a.delete)
+        company_a.manager = self.user_c
+        company_a.save()
+        self.assertEqual(self.user_a.delete(), (1, {"accounts.CustomUser": 1}))
+
+    def test_delete_company_manager_field(self):
+        """Removing the manager from a field is not allowed"""
+        company_a = Company.objects.get(name="Company A")
+        company_a.manager = None
+        self.assertRaises(IntegrityError, company_a.save)
