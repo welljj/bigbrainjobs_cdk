@@ -1,5 +1,3 @@
-from unittest.mock import patch
-
 import factory
 from django.contrib.auth import get_user_model
 from django.contrib.gis.geos import Point
@@ -24,11 +22,10 @@ class CompanyFactory(factory.django.DjangoModelFactory):
     state = factory.Faker("state_abbr")
     zip_code = factory.Faker("zipcode_plus4")
     about = factory.Faker("paragraph")
+    location = Point(0, 0)
 
 
-@patch("jobs.models.get_location_point", lambda x: Point(0, 0))
 class CompanyTestCase(TestCase):
-    @patch("jobs.models.get_location_point", lambda x: Point(0, 0))
     def setUp(self):
         self.user_a = UserFactory(username="user_a")
         self.user_b = UserFactory(username="user_b")
@@ -88,5 +85,6 @@ class CompanyTestCase(TestCase):
     def test_delete_company_manager_field(self):
         """Removing the manager from a field is not allowed"""
         company_a = Company.objects.get(name="Company A")
+        print(company_a.__dict__)
         company_a.manager = None
         self.assertRaises(IntegrityError, company_a.save)
