@@ -69,8 +69,9 @@ class Company(models.Model):
     about = models.TextField()
 
     def save(self, *args, **kwargs):
-        full_address = f"{self.address}, {self.city}, {self.state} {self.zip_code}"
-        self.location = get_location_point(full_address)
+        if not self.location:
+            full_address = f"{self.address}, {self.city}, {self.state} {self.zip_code}"
+            self.location = get_location_point(full_address)
         super().save(*args, **kwargs)
 
 
