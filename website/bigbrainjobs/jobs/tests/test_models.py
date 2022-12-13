@@ -85,6 +85,5 @@ class CompanyTestCase(TestCase):
     def test_delete_company_manager_field(self):
         """Removing the manager from a field is not allowed"""
         company_a = Company.objects.get(name="Company A")
-        print(company_a.__dict__)
         company_a.manager = None
         self.assertRaises(IntegrityError, company_a.save)
