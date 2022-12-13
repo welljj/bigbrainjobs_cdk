@@ -57,7 +57,9 @@ class Company(models.Model):
         WISCONSIN = "WI"
         WYOMING = "WY"
 
-    manager = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    manager = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="manager_of"
+    )
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=255)

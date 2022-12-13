@@ -59,13 +59,13 @@ class CompanyTestCase(TestCase):
         """Changing manager on Company should be reflected in users."""
         company_a = Company.objects.get(name="Company A")
         self.assertEqual(company_a.manager, self.user_a)
-        self.assertEqual(company_a, self.user_a.company)
-        self.assertRaises(ObjectDoesNotExist, lambda: self.user_c.company)
+        self.assertEqual(company_a, self.user_a.manager_of)
+        self.assertRaises(ObjectDoesNotExist, lambda: self.user_c.manager_of)
         company_a.manager = self.user_c
         company_a.save()
         company_a.refresh_from_db()
         self.user_c.refresh_from_db()
         self.user_a.refresh_from_db()
         self.assertEqual(company_a.manager, self.user_c)
-        self.assertEqual(company_a, self.user_c.company)
-        self.assertRaises(ObjectDoesNotExist, lambda: self.user_a.company)
+        self.assertEqual(company_a, self.user_c.manager_of)
+        self.assertRaises(ObjectDoesNotExist, lambda: self.user_a.manager_of)
