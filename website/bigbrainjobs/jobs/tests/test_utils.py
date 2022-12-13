@@ -11,9 +11,9 @@ class CompanyTestCase(TestCase):
         lambda x, y: [{"geometry": {"location": {"lat": 0, "lng": 0}}}],
     )
     def test_get_location_point_is_point(self):
-        self.assertIsInstance(
-            get_location_point("1600 Amphitheatre Parkway, Mountain View, CA"), Point
-        )
+        pnt = get_location_point("1600 Amphitheatre Parkway, Mountain View, CA")
+        self.assertIsInstance(pnt, Point)
+        self.assertTrue(pnt.equals(Point(0, 0)))
 
     @patch("googlemaps.Client.geocode", lambda x, y: [])
     def test_get_location_point_bad_address(self):
