@@ -5,7 +5,7 @@ from jobs.utils import get_location_point
 from unittest.mock import patch
 
 
-class CompanyTestCase(TestCase):
+class UtilsTestCase(TestCase):
     @patch(
         "googlemaps.Client.geocode",
         lambda x, y: [{"geometry": {"location": {"lat": 0, "lng": 0}}}],
