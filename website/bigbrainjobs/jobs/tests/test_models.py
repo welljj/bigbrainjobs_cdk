@@ -1,5 +1,6 @@
 from unittest.mock import patch
 
+import factory
 from django.contrib.auth import get_user_model
 from django.contrib.gis.geos import Point
 from django.core.exceptions import ObjectDoesNotExist
@@ -9,37 +10,31 @@ from django.test import TestCase
 from jobs.models import Company
 
 
+class UserFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = get_user_model()
+
+
+class CompanyFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Company
+
+    address = factory.Faker("street_address")
+    city = factory.Faker("city")
+    state = factory.Faker("state_abbr")
+    zip_code = factory.Faker("zipcode_plus4")
+    about = factory.Faker("paragraph")
+
+
 @patch("jobs.models.get_location_point", lambda x: Point(0, 0))
 class CompanyTestCase(TestCase):
     @patch("jobs.models.get_location_point", lambda x: Point(0, 0))
     def setUp(self):
-        self.user_a = get_user_model().objects.create_user(
-            username="user_a", email="user_a@test.com", password="password"
-        )
-        Company.objects.create(
-            manager=self.user_a,
-            name="Company A",
-            address="217 E 70th St",
-            city="New York",
-            state="NY",
-            zip_code="10021",
-            about="TEST ABOUT",
-        )
-        self.user_b = get_user_model().objects.create_user(
-            username="user_b", email="user_b@test.com", password="password"
-        )
-        Company.objects.create(
-            manager=self.user_b,
-            name="Company B",
-            address="7101 S Central Ave",
-            city="Los Angeles",
-            state="CA",
-            zip_code="90001",
-            about="TEST ABOUT 2",
-        )
-        self.user_c = get_user_model().objects.create_user(
-            username="user_c", email="user_c@test.com", password="password"
-        )
+        self.user_a = UserFactory(username="user_a")
+        self.user_b = UserFactory(username="user_b")
+        self.user_c = UserFactory(username="user_c")
+        CompanyFactory(manager=self.user_a, name="Company A")
+        CompanyFactory(manager=self.user_b, name="Company B")
 
     def test_company_has_location(self):
         """Company location is created."""
