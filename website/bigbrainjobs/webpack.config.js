@@ -106,7 +106,6 @@ module.exports = {
                 png: {
                   compressionLevel: 9,
                   quality: 1,
-                  effort: 10,
                 },
               },
             },
