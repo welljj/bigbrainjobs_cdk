@@ -53,7 +53,7 @@ module.exports = {
         test: /favicon.png$/i,
         type: 'asset/resource',
         generator: {
-          filename: '[name][ext][query]'
+          filename: '[name][ext][query]',
         }
       },
     ]
@@ -72,7 +72,7 @@ module.exports = {
       new CssMinimizerPlugin({
         minimizerOptions: {
           preset: [
-            "default",
+            'default',
             {
               discardComments: { removeAll: true },
             },
@@ -80,23 +80,23 @@ module.exports = {
         },
       }),
       new ImageMinimizerPlugin({
-        minimizer: {
-          implementation: ImageMinimizerPlugin.sharpMinify,
-          options: {
-            encodeOptions: {
-              png: {
-                compressionLevel: 9,
-                quality: 1,
-              },
-              jpeg: {
-                quality: 50,
-              },
-            },
-          },
-        },
+        // minimizer: {
+        //   implementation: ImageMinimizerPlugin.sharpMinify,
+        //   options: {
+        //     encodeOptions: {
+        //       png: {
+        //         compressionLevel: 9,
+        //         quality: 1,
+        //       },
+        //       jpeg: {
+        //         quality: 90,
+        //       },
+        //     },
+        //   },
+        // },
         generator: [
           {
-            preset: "favicon",
+            preset: 'favicon',
             implementation: ImageMinimizerPlugin.sharpGenerate,
             options: {
               resize: {
@@ -106,12 +106,13 @@ module.exports = {
                 png: {
                   compressionLevel: 9,
                   quality: 1,
+                  effort: 10,
                 },
               },
             },
           },
           {
-            preset: "webp",
+            preset: 'webp',
             implementation: ImageMinimizerPlugin.sharpGenerate,
             options: {
               resize: {
