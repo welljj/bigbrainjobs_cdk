@@ -23,7 +23,7 @@ module.exports = {
         {
           context: path.resolve(__dirname, 'assets', 'templates'),
           from: '**/*.html',
-          to: '../templates'
+          to: '../templates',
         },
       ],
     }),
