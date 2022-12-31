@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>
+            {% block title %}
+                BigBrainJobs
+            {% endblock title %}
+        </title>
+        <meta name="description" content="A jobsite for people with big brains."/>
+        <meta name="keywords" content="jobs"/>
+        {% load static %}
+        <link rel="icon" type="image/png" href="{% static 'favicon.png' %}"/>
+        <link rel="stylesheet" href="{% static 'main.css' %}"/>
+    </head>
+    <body>
+        {% block content %}
+        {% endblock content %}
+        <script src="{% static 'main.js' %}"></script>
+    </body>
+</html>

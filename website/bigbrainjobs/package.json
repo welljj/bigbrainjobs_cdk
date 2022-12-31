@@ -16,8 +16,10 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
+    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.3",
     "css-minimizer-webpack-plugin": "^4.2.2",
+    "html-minimizer-webpack-plugin": "^4.3.0",
     "image-minimizer-webpack-plugin": "^3.8.1",
     "mini-css-extract-plugin": "^2.7.2",
     "postcss": "^8.4.20",

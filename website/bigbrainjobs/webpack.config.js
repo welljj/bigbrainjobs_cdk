@@ -3,19 +3,26 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const HtmlMinimizerPlugin = require("html-minimizer-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   mode: 'production',
-  entry: './static/src/main.js',
+  entry: './assets/main.js',
   target: 'web',
   output: {
-    path: path.resolve(__dirname, 'static/dist'),
+    path: path.resolve(__dirname, 'static'),
     clean: true,
-    assetModuleFilename: 'images/[name][ext][query]',
+    // assetModuleFilename: 'images/[name][ext][query]',
   },
   plugins: [
     new MiniCssExtractPlugin(),
+    // new CopyPlugin({
+    //   patterns: [
+    //     { from: '*.html', to: './templates', context: './static/src/templates/' },
+    //   ],
+    // }),
     // new BundleAnalyzerPlugin()
   ],
   module: {
@@ -54,11 +61,15 @@ module.exports = {
         type: 'asset/resource',
       },
       {
+        test: /\.html$/i,
+        type: "asset/resource",
+      },
+      {
         test: /favicon.png$/i,
         type: 'asset/resource',
         generator: {
-          filename: '[name][ext][query]',
-        }
+          filename: '[name][ext]',
+        },
       },
     ]
   },
@@ -83,6 +94,7 @@ module.exports = {
           ],
         },
       }),
+      new HtmlMinimizerPlugin(),
       new ImageMinimizerPlugin({
         // minimizer: {
         //   implementation: ImageMinimizerPlugin.sharpMinify,
