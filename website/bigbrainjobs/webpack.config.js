@@ -18,11 +18,15 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin(),
-    // new CopyPlugin({
-    //   patterns: [
-    //     { from: '*.html', to: './templates', context: './static/src/templates/' },
-    //   ],
-    // }),
+    new CopyPlugin({
+      patterns: [
+        {
+          context: path.resolve(__dirname, 'assets', 'templates'),
+          from: '**/*.html',
+          to: '../templates'
+        },
+      ],
+    }),
     // new BundleAnalyzerPlugin()
   ],
   module: {
