@@ -14,7 +14,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'static'),
     clean: true,
-    // assetModuleFilename: 'images/[name][ext][query]',
+    assetModuleFilename: 'images/[name][ext]',
   },
   plugins: [
     new MiniCssExtractPlugin(),
