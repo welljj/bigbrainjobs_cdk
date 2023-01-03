@@ -100,20 +100,20 @@ module.exports = {
       }),
       new HtmlMinimizerPlugin(),
       new ImageMinimizerPlugin({
-        // minimizer: {
-        //   implementation: ImageMinimizerPlugin.sharpMinify,
-        //   options: {
-        //     encodeOptions: {
-        //       png: {
-        //         compressionLevel: 9,
-        //         quality: 1,
-        //       },
-        //       jpeg: {
-        //         quality: 90,
-        //       },
-        //     },
-        //   },
-        // },
+        minimizer: {
+          implementation: ImageMinimizerPlugin.sharpMinify,
+          // options: {
+          //   encodeOptions: {
+          //     png: {
+          //       compressionLevel: 9,
+          //       quality: 1,
+          //     },
+          //     jpeg: {
+          //       quality: 90,
+          //     },
+          //   },
+          // },
+        },
         generator: [
           {
             preset: 'favicon',
