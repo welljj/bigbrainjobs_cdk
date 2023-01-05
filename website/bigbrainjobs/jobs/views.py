@@ -3,6 +3,6 @@ from .forms import SearchForm
 
 
 class Home(FormView):
-    template_name: str = "home.html"
+    template_name = "home.html"
     form_class = SearchForm
     success_url = "/results/"
