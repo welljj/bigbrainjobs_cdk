@@ -29,5 +29,23 @@
                 <button type="submit" class="btn btn-primary btn-lg">Find Jobs</button>
             </div>
         </form>
+        <div class="row">
+            {% for job in page_obj %}<div class="col-6">{{ job.title }}</div>{% endfor %}
+        </div>
+        <div class="row">
+            {% if page_obj.has_previous %}
+                <div class="col">
+                    <a href="?page=1&what={{ request.GET.what }}&where={{ request.GET.where }}">first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}&what={{ request.GET.what }}&where={{ request.GET.where }}">previous</a>
+                </div>
+            {% endif %}
+            <div class="col">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</div>
+            {% if page_obj.has_next %}
+                <div class="col">
+                    <a href="?page={{ page_obj.next_page_number }}&what={{ request.GET.what }}&where={{ request.GET.where }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}&what={{ request.GET.what }}&where={{ request.GET.where }}">last</a>
+                </div>
+            {% endif %}
+        </div>
     </div>
 {% endblock content %}
