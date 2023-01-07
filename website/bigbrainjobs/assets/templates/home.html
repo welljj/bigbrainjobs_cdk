@@ -39,7 +39,7 @@
                             <p class="card-text">{{ job.description }}</p>
                             <button class="btn btn-primary">Apply Now</button>
                         </div>
-                        <div class="card-footer text-muted">3 days ago</div>
+                        <div class="card-footer text-muted">{{ job.updated_date|timesince }}</div>
                     </div>
                 </div>
             {% endfor %}
