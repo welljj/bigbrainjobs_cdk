@@ -1,1 +1,3 @@
 django-debug-toolbar
+djlint
+factory_boy
