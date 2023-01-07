@@ -12,8 +12,8 @@
             </div>
         </div>
     </nav>
-    <div class="container my-5">
-        <form method="get" class="row align-items-center">
+    <div class="container">
+        <form method="get" class="row align-items-center my-5">
             {{ form.non_field_errors }}
             {% for field in form %}
                 <div class="col">
@@ -29,8 +29,20 @@
                 <button type="submit" class="btn btn-primary btn-lg">Find Jobs</button>
             </div>
         </form>
-        <div class="row">
-            {% for job in page_obj %}<div class="col-6">{{ job.title }}</div>{% endfor %}
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for job in page_obj %}
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ job.title }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ job.company.name }}</h6>
+                            <p class="card-text">{{ job.description }}</p>
+                            <button class="btn btn-primary">Apply Now</button>
+                        </div>
+                        <div class="card-footer text-muted">3 days ago</div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
         <div class="row">
             {% if page_obj.has_previous %}
