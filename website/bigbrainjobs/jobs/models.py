@@ -83,3 +83,5 @@ class Job(models.Model):
     hourly = models.PositiveSmallIntegerField()
     salary = models.PositiveIntegerField()
     applicants = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    created_date = models.DateField(auto_now_add=True)
+    updated_date = models.DateField(auto_now=True)
