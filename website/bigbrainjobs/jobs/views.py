@@ -19,5 +19,7 @@ class Home(FormMixin, ListView):
         if q:
             # Return a filtered queryset
             return queryset.filter(title__icontains=q)
+        if location:
+            pass
         # Return the base queryset
         return queryset
