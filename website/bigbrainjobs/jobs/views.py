@@ -15,6 +15,7 @@ class Home(FormMixin, ListView):
         queryset = super().get_queryset()
         # Get the q GET parameter
         q = self.request.GET.get("what")
+        location = self.request.GET.get("where")
         if q:
             # Return a filtered queryset
             return queryset.filter(title__icontains=q)
